@@ -2,7 +2,7 @@ import tkinter as tk
 import random
 
 window = tk.Tk()
-window.title("Rainword")
+window.title("RainWord")
 window.geometry("600x400")
 window.resizable(False, False)
 
@@ -43,8 +43,10 @@ class FallingWord:
 def spawn_word():
     x_pos = random.randint(50, 400)
     word = random.choice(word_list)
-    active_words.append(FallingWord(word, x_pos, 20))
-    if game_running and len(active_words) < 4:
+    if len(active_words) < 4:
+        active_words.append(FallingWord(word, x_pos, 20))
+    if game_running:
+        print(active_words)
         window.after(2000, spawn_word)  # Spawn every 2 seconds
 
 # Typing input
