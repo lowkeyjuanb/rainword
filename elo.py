@@ -6,7 +6,7 @@ window.title("Rainword")
 window.geometry("600x400")
 window.resizable(False, False)
 
-canvas = tk.Canvas(window, width=600, height=400, bg="white")
+canvas = tk.Canvas(window, width=600, height=400, bg="black")
 canvas.pack()
 
 word_list = ["Test", "Python", "Code", "Challenge", "Typing", "Game", "Window", "Canvas", "Letter", "Speed"]
@@ -27,7 +27,7 @@ class FallingWord:
     def create_text(self):
         self.letters.clear()
         for i, char in enumerate(self.text):
-            letter = canvas.create_text(self.x + i * 20, self.y, text=char, font=("Arial", 20), fill="black")
+            letter = canvas.create_text(self.x + i * 20, self.y, text=char, font=("Console", 20), fill="white")
             self.letters.append(letter)
 
     def move(self):
@@ -89,7 +89,7 @@ def game_over():
     global game_running
     game_running = False
     canvas.delete("all")
-    canvas.create_text(300, 200, text="Game Over!", font=("Arial", 32), fill="red")
+    canvas.create_text(300, 200, text="Game Over!", font=("Console", 32), fill="white")
 
 # Start the game
 spawn_word()
