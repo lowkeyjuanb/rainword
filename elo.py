@@ -11,9 +11,10 @@ canvas.pack()
 
 word_list = ["Test", "Python", "Code", "Challenge", "Typing", "Game", "Window", "Canvas", "Letter", "Speed"]
 active_words = []
-speed = 2
+speed = 1
 game_running = True
 typed_buffer = ""
+score = 0
 
 # Word object structure
 class FallingWord:
@@ -27,10 +28,11 @@ class FallingWord:
     def create_text(self):
         self.letters.clear()
         for i, char in enumerate(self.text):
-            letter = canvas.create_text(self.x + i * 20, self.y, text=char, font=("Console", 20), fill="white")
-            self.letters.append(letter)
+            if game_running:
+                letter = canvas.create_text(self.x + i * 20, self.y, text=char, font=("Console", 20), fill="white")
+                self.letters.append(letter)
 
-    def move(self):
+    def move(self, speed):
         self.y += speed
         for letter in self.letters:
             canvas.move(letter, 0, speed)
@@ -48,10 +50,11 @@ class FallingWord:
 
 # Add new falling words at random positions
 def spawn_word():
+    global game_running
     x_pos = random.randint(50, 400)
     word = random.choice(word_list)
-    if len(active_words) < 4:
-        active_words.append(FallingWord(word, x_pos, 20))
+
+    active_words.append(FallingWord(word, x_pos, 20))
     if game_running:
         window.after(2000, spawn_word)  # Spawn every 2 seconds
 
@@ -72,6 +75,8 @@ def on_key_press(event):
 
 def check_words():
     global typed_buffer
+    global speed
+    global score
     if not active_words:
         return
     
@@ -86,6 +91,8 @@ def check_words():
         target_word.destroy()
         active_words.remove(target_word)
         typed_buffer = ""
+        speed += .5
+        score += 1
 
 # Move all words down
 def fall():
@@ -94,8 +101,8 @@ def fall():
         return
 
     for word_obj in active_words:
-        word_obj.move()
-        if word_obj.y >= 350:
+        word_obj.move(speed)
+        if word_obj.y >= 400:
             game_over()
             return
 
@@ -103,9 +110,11 @@ def fall():
 
 def game_over():
     global game_running
+    global score
     game_running = False
     canvas.delete("all")
     canvas.create_text(300, 200, text="Game Over!", font=("Console", 32), fill="white")
+    canvas.create_text(300, 250, text="Score: " + str(score), font=("Console", 32), fill="white")
 
 # Start the game
 spawn_word()
