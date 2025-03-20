@@ -39,6 +39,13 @@ class FallingWord:
         for letter in self.letters:
             canvas.delete(letter)
 
+    def highlight(self, typed):
+        for i, letter in enumerate(self.letters):
+            if i < len(typed) and self.text[i] == typed[i]:
+                canvas.itemconfig(letter, fill="green")
+            else:
+                canvas.itemconfig(letter, fill="white")
+
 # Add new falling words at random positions
 def spawn_word():
     x_pos = random.randint(50, 400)
@@ -46,7 +53,6 @@ def spawn_word():
     if len(active_words) < 4:
         active_words.append(FallingWord(word, x_pos, 20))
     if game_running:
-        print(active_words)
         window.after(2000, spawn_word)  # Spawn every 2 seconds
 
 # Typing input
@@ -66,12 +72,20 @@ def on_key_press(event):
 
 def check_words():
     global typed_buffer
-    for word_obj in active_words:
-        if word_obj.text == typed_buffer:
-            word_obj.destroy()
-            active_words.remove(word_obj)
-            typed_buffer = ""
-            break
+    if not active_words:
+        return
+    
+    # Targeting bottom word
+    target_word = max(active_words, key=lambda w: w.y)
+
+    # Highlighting each letter as its written
+    target_word.highlight(typed_buffer)
+
+    # Check if the user wrote the word correctly
+    if target_word.text == typed_buffer:
+        target_word.destroy()
+        active_words.remove(target_word)
+        typed_buffer = ""
 
 # Move all words down
 def fall():
