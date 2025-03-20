@@ -2,6 +2,10 @@
 
 Welcome to the **RainWord**, a fun and challenging typing game where words fall from the top of the screen, and you must type each word before it reaches the bottom!
 
+## Inspiration
+This project was inspired by this video:  
+[Watch the Inspiration Video](https://youtu.be/jAMegKEetx4?si=TnmtsLzOiZQupqlY)
+
 ## Features
 
 - Multiple words fall from the top of the screen at the same time.
