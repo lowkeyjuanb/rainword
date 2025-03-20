@@ -12,7 +12,7 @@ canvas.pack()
 word_list = ["Test", "Python", "Code", "Challenge", "Typing", "Game", "Window", "Canvas", "Letter", "Speed"]
 active_words = []
 speed = 1
-game_running = True
+game_running = False
 typed_buffer = ""
 score = 0
 
@@ -113,11 +113,21 @@ def game_over():
     global score
     game_running = False
     canvas.delete("all")
-    canvas.create_text(300, 200, text="Game Over!", font=("Console", 32), fill="white")
-    canvas.create_text(300, 250, text="Score: " + str(score), font=("Console", 32), fill="white")
+    canvas.create_text(300, 150, text="Game Over!", font=("Console", 32), fill="white")
+    canvas.create_text(300, 200, text="Score: " + str(score), font=("Console", 32), fill="white")
 
-# Start the game
-spawn_word()
-window.bind("<Key>", on_key_press)
-fall()
+def start(event=None):
+    global game_running
+    if game_running:
+        return
+    # Start the game
+    canvas.delete("all")
+    game_running = True
+    spawn_word()
+    window.bind("<Key>", on_key_press)
+    fall()
+
+canvas.create_text(300, 150, text="RainWord", font=("Console", 32), fill="white")
+canvas.create_text(300, 200, text="Press <ENTER> to continue...", font=("Console", 32), fill="white")
+window.bind("<Return>", start)
 window.mainloop()
