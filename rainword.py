@@ -1,14 +1,18 @@
+## Imports
 import tkinter as tk
 import random
 
+# Window set up
 window = tk.Tk()
 window.title("RainWord")
 window.geometry("600x400")
 window.resizable(False, False)
 
+# Canvas set up
 canvas = tk.Canvas(window, width=600, height=400, bg="black")
 canvas.pack()
 
+# Variables
 word_list = ["Test", "Python", "Code", "Challenge", "Typing", "Game", "Window", "Canvas", "Letter", "Speed"]
 active_words = []
 speed = 1
