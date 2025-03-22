@@ -26,3 +26,6 @@ This project was inspired by this video:
    ```bash
    git clone https://github.com/lowkeyjuanb/rainword.git
    cd rainword
+   
+## Demo
+![Demo](rainword-v1.gif)
